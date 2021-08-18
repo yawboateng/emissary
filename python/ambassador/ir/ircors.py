@@ -29,14 +29,18 @@ class IRCORS (IRResource):
         # 'origins' cannot be treated like other keys, because if it's a
         # list, then it remains as is, but if it's a string, then it's
         # converted to a list.  It has already been validated by the
-        # JSON schema to either be a string or a list of strings.
+        # JSON schema to either be a string, a list of strings or a list
+        # of dictionaries.
         origins = self.pop('origins', None)
 
         if origins is not None:
             if type(origins) is not list:
                 origins = origins.split(',')
 
-            self.allow_origin_string_match = [{'exact': origin} for origin in origins]
+            self.allow_origin_string_match = [
+                {'exact': origin} if isinstance(origin, str) else origin
+                for origin in origins
+            ]
 
         for from_key, to_key in [ ( 'max_age', 'max_age' ),
                                   ( 'credentials', 'allow_credentials' ),

@@ -54,7 +54,76 @@
                 "origins":  {
                     "anyOf": [
                         { "type": "string" },
-                        { "type": "array", "items": { "type": "string" } }
+                        {
+                            "type": "array",
+                            "items": {
+                                "oneOf": [
+                                    {
+                                        "type": "string"
+                                    },
+                                    {
+                                        "type": "object",
+                                        "properties": {
+                                            "exact": {
+                                                "type": "string"
+                                                "required": true
+                                            },
+                                            "ignore_case": {"type": "boolean"}
+                                        },
+                                        "additionalProperties": false
+                                    },
+                                    {
+                                        "type": "object",
+                                        "properties": {
+                                            "prefix": {
+                                                "type": "string",
+                                                "minLength": 1,
+                                                "required": true
+                                            },
+                                            "ignore_case": {"type": "boolean"}
+                                        },
+                                        "additionalProperties": false
+                                    },
+                                    {
+                                        "type": "object",
+                                        "properties": {
+                                            "suffix": {
+                                                "type": "string",
+                                                "minLength": 1,
+                                                "required": true
+                                            },
+                                            "ignore_case": {"type": "boolean"}
+                                        },
+                                        "additionalProperties": false
+                                    },
+                                    {
+                                        "type": "object",
+                                        "properties": {
+                                            "safe_regex": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "regex": {"type": "string"}
+                                                },
+                                                "required": true
+                                            }
+                                        },
+                                        "additionalProperties": false
+                                    },
+                                    {
+                                        "type": "object",
+                                        "properties": {
+                                            "contains": {
+                                                "type": "string",
+                                                "minLength": 1,
+                                                "required": true
+                                            },
+                                            "ignore_case": {"type": "boolean"}
+                                        },
+                                        "additionalProperties": false
+                                    }
+                                ]
+                            }
+                        }
                     ]
                 },
                 "methods": {
